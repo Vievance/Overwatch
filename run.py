@@ -1,6 +1,11 @@
 from fancii import create_app, db
 from flask_migrate import Migrate
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 app = create_app()
 migrate = Migrate(app, db)
 
