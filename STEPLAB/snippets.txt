@@ -1,0 +1,42 @@
+
+'''         youngest_children = (
+            db.session.query(GoalAction)
+            .filter_by(parent_action_id=self.id)
+            .filter(GoalAction.child_actions == None)
+            .all()
+        )
+''' 
+'''        y = 0    
+        for child in parent.child_actions:
+            y += child.perc_comp
+            parent.perc_comp = y / len(parent.child_actions)      '''      
+
+
+
+                        const checkbox = $(elem).parentElem.querySelector('.checkbox');
+                        if (checkbox) {
+                            &#9745;
+                        }
+
+        function unmark_action_as_complete(elem) {
+            const action_id = $(elem).closest('[data-action-id]').attr('data-action-id');
+
+            if (confirm('Unmark action as complete?')) {
+                $.ajax({
+                    url: '{{ request.path }}',
+                    type: 'POST',
+                    data: {task: 'unmark_action_as_complete', action_id: action_id},
+                }).done(function (server_data) {
+                    if (server_data.result === 'ok') {
+                        // reload
+                        window.location.reload();
+                    } else {
+                        // display user allowed error
+                        alert('Sorry something went wrong - ' + server_data.message);
+                    }
+                }).fail(function () {
+                    // generic error
+                    alert('Sorry! Something went very wrong.')
+                });
+            }
+        }
