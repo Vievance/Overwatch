@@ -22,3 +22,22 @@ def delete_hero(hero_id):
     db.session.commit()
     return jsonify({'message': f'Hero {hero_id} deleted successfully'})
 
+@heroes.route('/get_form', methods=['GET'])
+def get_form():
+    hero_form = HeroForm()
+    return render_template('hero_form.html', form=hero_form)
+
+@heroes.route('/create_hero', methods=['POST'])
+def create_hero():
+    form = HeroForm(request.form)
+
+    if form.validate():
+        new_hero = Hero(name=form.name.data, role=form.role.data, country=form.country.data, release_date=form.release_date.data)
+        db.session.add(new_hero)
+        db.session.commit()
+
+        return jsonify({'message': 'Hero created successfully', 'hero_id':new_hero.id}), 201
+    
+    else:
+        errors = {field.name: field.errors for field in form}
+        return jsonify({'message': 'Failed to create hero', 'errors': errors}), 400

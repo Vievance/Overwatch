@@ -33,23 +33,7 @@
     </style>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        function deleteHero(heroId) {
-            $.ajax({
-                url: `/heroes/delete/${heroId}`,
-                type: 'DELETE',
-                success: function(response) {
-                    console.log(response);
-                    document.querySelector(`.hero${heroId}Container`).style.display = 'none';
-                    // Optionally, you can refresh the page or update the UI here
-                },
-                error: function(error) {
-                    console.error(error);
-                    alert('Failed to delete hero. Please try again.');
-                }
-            });
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
     <div class='HeroSelect'>
@@ -62,10 +46,13 @@
                 <img src="/static/images/heroes/{{ hero.name }}.png" alt="Hero Picture">
             </div>
         {% endfor %}
-            <div class="new_hero_container heroContainer">
+            <div id="new_hero_container" class="heroContainer">
                 <h1>Add a new hero</h1> 
                 <p>__________________</p> 
-                <a href='{{ url_for("heroes.new_hero") }}'> <img src="/static/images/plus.png" alt="Plus Sign"> </a>
+                <div>
+                    <button id="new_hero_button"><img src="/static/images/plus.png" alt="Plus Sign"></button>
+                </div>
+                <a href='{{ url_for("heroes.new_hero") }}'>Ol' Reliable</a>
             </div>
     </div>
     
